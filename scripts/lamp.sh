@@ -4,6 +4,13 @@
 # end of this script.
 start_seconds="$(date +%s)"
 
+#set hostname
+NEW_HOSTNAME="devstack"
+echo $NEW_HOSTNAME > /proc/sys/kernel/hostname
+sed -i 's/127.0.1.1.*/127.0.1.1\t'"$NEW_HOSTNAME"'/g' /etc/hosts
+echo $NEW_HOSTNAME > /etc/hostname
+service hostname start
+
 # Network Detection
 #
 # Make an HTTP request to google.com to determine if outside access is available
@@ -85,9 +92,6 @@ apt_package_check_list=(
 	# Req'd for i18n tools
 	gettext
 
-	# Req'd for Webgrind
-	graphviz
-
 	# dos2unix
 	# Allows conversion of DOS style line endings to something we'll have less
 	# trouble with in Linux.
@@ -96,6 +100,7 @@ apt_package_check_list=(
 	# nodejs for use by grunt
 	g++
 	nodejs
+	npm
 )
 
 echo "Check for apt packages to install..."
@@ -121,25 +126,25 @@ done
 # account. This runs on every provision, even if MySQL has been installed. If
 # MySQL is already installed, it will not affect anything.
 echo mysql-server mysql-server/root_password password root | debconf-set-selections
-echo mysql-server mysql-server/root_password_again password vagrant | debconf-set-selections
+echo mysql-server mysql-server/root_password_again password root | debconf-set-selections
 
 #PHPMyAdmin
-echo 'phpmyadmin phpmyadmin/dbconfig-install boolean false' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections
+echo phpmyadmin phpmyadmin/dbconfig-install boolean false | debconf-set-selections
+echo phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2 | debconf-set-selections
 
-echo 'phpmyadmin phpmyadmin/app-password-confirm password vagrant' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/mysql/admin-pass password vagrant' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/password-confirm password vagrant' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/setup-password password vagrant' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/database-type select mysql' | debconf-set-selections
-echo 'phpmyadmin phpmyadmin/mysql/app-pass password vagrant' | debconf-set-selections
+echo phpmyadmin phpmyadmin/app-password-confirm password root | debconf-set-selections
+echo phpmyadmin phpmyadmin/mysql/admin-pass password root | debconf-set-selections
+echo phpmyadmin phpmyadmin/password-confirm password root | debconf-set-selections
+echo phpmyadmin phpmyadmin/setup-password password root | debconf-set-selections
+echo phpmyadmin phpmyadmin/database-type select mysql | debconf-set-selections
+echo phpmyadmin phpmyadmin/mysql/app-pass password root | debconf-set-selections
 
-echo 'dbconfig-common dbconfig-common/mysql/app-pass password vagrant' | debconf-set-selections
-echo 'dbconfig-common dbconfig-common/mysql/app-pass password' | debconf-set-selections
-echo 'dbconfig-common dbconfig-common/password-confirm password vagrant' | debconf-set-selections
-echo 'dbconfig-common dbconfig-common/app-password-confirm password vagrant' | debconf-set-selections
-echo 'dbconfig-common dbconfig-common/app-password-confirm password vagrant' | debconf-set-selections
-echo 'dbconfig-common dbconfig-common/password-confirm password vagrant' | debconf-set-selections
+echo dbconfig-common dbconfig-common/mysql/app-pass password root | debconf-set-selections
+echo dbconfig-common dbconfig-common/mysql/app-pass password | debconf-set-selections
+echo dbconfig-common dbconfig-common/password-confirm password root | debconf-set-selections
+echo dbconfig-common dbconfig-common/app-password-confirm password root | debconf-set-selections
+echo dbconfig-common dbconfig-common/app-password-confirm password root | debconf-set-selections
+echo dbconfig-common dbconfig-common/password-confirm password root | debconf-set-selections
 
 # Postfix
 #
