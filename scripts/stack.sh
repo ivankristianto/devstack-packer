@@ -101,6 +101,10 @@ apt_package_check_list=(
 	g++
 	nodejs
 	npm
+	gcc 
+	ruby-devel 
+	rubygems
+	compass
 )
 
 echo "Check for apt packages to install..."
