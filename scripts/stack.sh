@@ -101,10 +101,6 @@ apt_package_check_list=(
 	g++
 	nodejs
 	npm
-	gcc 
-	ruby-devel 
-	rubygems
-	compass
 )
 
 echo "Check for apt packages to install..."
@@ -262,6 +258,12 @@ if [[ $ping_result == "Connected" ]]; then
 	gem update --system
 	gem install sass
 	gem install compass
+
+	#Add virtual host
+	cd /usr/local/bin
+	wget -O virtualhost https://raw.githubusercontent.com/RoverWire/virtualhost/master/virtualhost.sh
+	chmod +x virtualhost
+	virtualhost create local.dev devstack
 
 else
 	echo -e "\nNo network connection available, skipping package installation"
