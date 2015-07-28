@@ -101,6 +101,7 @@ apt_package_check_list=(
 	g++
 	nodejs
 	npm
+	ruby-dev
 )
 
 echo "Check for apt packages to install..."
@@ -269,10 +270,15 @@ else
 	echo -e "\nNo network connection available, skipping package installation"
 fi
 
+# Add the vagrant user to the www-data group so that it has better access
+# to PHP and Apache related files.
+usermod -a -G www-data vagrant
 
-#Restart Service
 php5enmod xdebug
 php5enmod mcrypt
+a2enmod rewrite
+
+#Restart Service
 service apache2 restart
 service mysql restart
 service memcached restart
