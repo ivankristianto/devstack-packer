@@ -62,6 +62,7 @@ apt_package_check_list=(
 	php5-curl
 	php-pear
 	php5-gd
+	php5-memcached
 
 	# memcached is made available for object caching
 	memcached
@@ -102,6 +103,7 @@ apt_package_check_list=(
 	nodejs
 	npm
 	ruby-dev
+	bundle
 )
 
 echo "Check for apt packages to install..."
@@ -191,6 +193,8 @@ if [[ $ping_result == "Connected" ]]; then
 	# Make sure we have the latest npm version and the update checker module
 	npm install -g npm
 	npm install -g npm-check-updates
+	npm install --global gulp
+	npm install --save-dev gulp
 	ln -s /usr/bin/nodejs /usr/bin/node
 
 	# xdebug
@@ -276,6 +280,7 @@ usermod -a -G www-data vagrant
 
 php5enmod xdebug
 php5enmod mcrypt
+php5enmod memcached
 a2enmod rewrite
 
 #Restart Service
