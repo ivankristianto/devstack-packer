@@ -40,6 +40,8 @@ apt_package_check_list=(
 
 	# apache2 is installed as the default web server
 	apache2
+	apache2-doc 
+	apache2-utils
 
 	# PHP5
 	#
