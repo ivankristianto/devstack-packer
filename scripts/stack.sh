@@ -99,9 +99,14 @@ apt_package_check_list=(
 	dos2unix
 
 	# nodejs for use by grunt
-	g++
-	nodejs
-	npm
+  	g++
+  	nodejs
+  	npm
+
+  	#Mailcatcher requirement
+  	libsqlite3-dev
+
+	#Ruby requirement
 	ruby-dev
 	bundle
 )
