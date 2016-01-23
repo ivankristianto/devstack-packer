@@ -95,6 +95,9 @@ apt_package_check_list=(
 	# Req'd for i18n tools
 	gettext
 
+	# Req'd for Webgrind
+  	graphviz
+
 	# dos2unix
 	# Allows conversion of DOS style line endings to something we'll have less
 	# trouble with in Linux.
@@ -103,14 +106,12 @@ apt_package_check_list=(
 	# nodejs for use by grunt
   	g++
   	nodejs
-  	npm
 
   	#Mailcatcher requirement
   	libsqlite3-dev
 
 	#Ruby requirement
 	ruby-dev
-	bundle
 )
 
 echo "Check for apt packages to install..."
